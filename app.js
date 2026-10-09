@@ -1,6 +1,7 @@
 'use strict';
 
 const Homey = require('homey');
+const Telemetry = require('./lib/telemetry');
 const {
   RelaySocket,
   RELAY_HOST,
@@ -26,6 +27,9 @@ module.exports = class Link2HomeApp extends Homey.App {
     this._reconnectDelayMs = 1000;
     this._reconnectDelayMaxMs = 30000;
     this._destroyed = false;
+
+    this.telemetry = new Telemetry(this);
+    await this.telemetry.begin();
   }
 
   async onUninit() {
@@ -39,6 +43,7 @@ module.exports = class Link2HomeApp extends Homey.App {
       this._workSocket.close();
       this._workSocket = null;
     }
+    await this.telemetry.end();
   }
 
   setCredentials(username, passwordMd5) {
