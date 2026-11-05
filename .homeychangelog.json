@@ -34,5 +34,8 @@
   },
   "1.0.11": {
     "en": "Minor improvements"
+  },
+  "1.0.12": {
+    "en": "Update dependencies"
   }
 }
